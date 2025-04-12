@@ -2,16 +2,89 @@ import tomJerryNibbles.*
 
 describe "Grupo de test" {
 
-  test "test 1" {
-    assert.equals(100, 50+50)
+  test "Al inicio, la velocidad máxima de Tom es 10" {
+    assert.equals(10, tom.velocidadMaxima())
   }
 
-  test "test 3" {
-    assert.that(true)
+  test "Si Tom come a Jerry, su velocidad máxima pasa a ser 15.2" {
+    tom.ComerA_(jerry)
+    assert.equals(15.2, tom.velocidadMaxima())
   }
 
-  test "test 4" {
-    assert.notThat(false)
+  test "Si Tom corre 24 metros, entonces su velocidad máxima pasa a ser 14" {
+    tom.ComerA_(jerry)
+    tom.Correr_Metros(24)
+    assert.equals(14, tom.velocidadMaxima())
+  }
+
+  test "Si tom come a Nibbles, pasa a tener de velocidad máxima 18.7" {
+    tom.ComerA_(jerry)
+    tom.Correr_Metros(24)
+    tom.ComerA_(nibbles)
+    assert.equals(18.7, tom.velocidadMaxima())
+  }
+
+  test "si Jerry cumple años (3 años de edad), y luego Tom lo vuelve a comer, pasaría a tener 25.9" {
+    tom.ComerA_(jerry)
+    tom.Correr_Metros(24)
+    tom.ComerA_(nibbles)
+    jerry.CumplirAños()
+    tom.ComerA_(jerry)
+    assert.equals(25.9, tom.velocidadMaxima())
+  }
+
+  test "si tom corre 38 metros su velocidad pasa a ser 24" {
+    tom.ComerA_(jerry)
+    tom.Correr_Metros(24)
+    tom.ComerA_(nibbles)
+    jerry.CumplirAños()
+    tom.ComerA_(jerry)
+    tom.Correr_Metros(38)
+    assert.equals(24, tom.velocidadMaxima())
+  }
+
+  test "Si tom recorre 100 metros su energia queda en 0" {
+    tom.Correr_Metros(100)
+    assert.equals(0, tom.energia())
+  }
+
+  test "Tom puede cazar a Jerry si esta a 80 metros" {
+    tom.Cazar_A_Metros(jerry, 80)
+    assert.equals(jerry, tom.raton_Comido())
+  }
+
+  test "Si Tom se come a jerry, despues puede comer a nibbles que esta a 204 metros con la energia obtenida" {
+    tom.ComerA_(jerry)
+    tom.Cazar_A_Metros(nibbles, 204)
+    assert.equals(nibbles, tom.raton_Comido())
+  }
+
+  test "Sin embargo, si nibbles esta a 205 metros no puede correr lo suficiente para comerlo" {
+    tom.ComerA_(jerry)
+    tom.Cazar_A_Metros(nibbles, 205)
+    assert.equals(jerry, tom.raton_Comido())
+  }
+
+  test "El peso de stuart tras cambiarse de ropa es de 20" {
+    stuart.CambiarseDeRopa()
+    assert.equals(20, stuart.peso())
+  }
+
+  test "Pero si se vuelve a cambiar de ropa su peso sube a 30 (vuelve a su peso original)" {
+    stuart.CambiarseDeRopa()
+    stuart.CambiarseDeRopa()
+    assert.equals(30, stuart.peso())
+  }
+
+  test "Si nibbles se cambia de ropa y Tom se lo come, su velocidad maxima va a ser de 13.2" {
+    stuart.CambiarseDeRopa()
+    tom.ComerA_(stuart)
+    assert.equals(13.2, tom.velocidadMaxima())
+  }
+
+  test "Pero si no se cambio de ropa antes, la velocidad maxima de tom sera de 14.2" {
+    tom.ComerA_(stuart)
+    assert.equals(14.2, tom.velocidadMaxima())
   }
 
 }
